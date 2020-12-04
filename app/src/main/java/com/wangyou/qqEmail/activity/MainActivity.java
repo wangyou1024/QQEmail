@@ -1,10 +1,13 @@
 package com.wangyou.qqEmail.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+
+import androidx.cardview.widget.CardView;
 
 import com.wangyou.qqEmail.R;
 import com.wangyou.qqEmail.activity.BaseActivity;
@@ -12,7 +15,8 @@ import com.wangyou.qqEmail.activity.BaseActivity;
 public class MainActivity extends BaseActivity {
 
     private PopupMenu popupMenu;
-    private ImageView iv_more;
+    private ImageView ivMore;
+    private CardView cvHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         methodStart("initView");
-        iv_more = findViewById(R.id.iv_more);
-        iv_more.setOnClickListener((view)->{
+        ivMore = findViewById(R.id.iv_more);
+        ivMore.setOnClickListener(view-> {
             showPopupMenu(view);
+        });
+        cvHeader = findViewById(R.id.cv_header);
+        cvHeader.setOnClickListener((view)->{
+            Intent intent = new Intent(MainActivity.this, MyEmail.class);
+            startActivity(intent);
         });
         methodEnd("initView");
     }
@@ -62,6 +71,7 @@ public class MainActivity extends BaseActivity {
                 case R.id.menu_item_time_poster:
                     toastShow("时光使者");
                     break;
+                default:toastShow("error");break;
             }
             return true;
         });

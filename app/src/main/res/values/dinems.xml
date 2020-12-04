@@ -3,6 +3,6 @@
     <dimen name="margin_horizontal">15dp</dimen>
     <dimen name="margin_horizontal_more">60dp</dimen>
     <dimen name="margin_vertical">10dp</dimen>
-    <dimen name="list_text_size">19dp</dimen>
-    <dimen name="ic_size">28dp</dimen>
+    <dimen name="list_text_size">19sp</dimen>
+    <dimen name="ic_size">25dp</dimen>
 </resources>

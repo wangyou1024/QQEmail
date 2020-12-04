@@ -23,4 +23,14 @@
     <string name="have_sent">已发送</string>
     <string name="have_delete">已删除</string>
     <string name="rubbish_box">垃圾箱</string>
+    <string name="cancel">╳</string>
+    <string name="my_email">我的邮箱</string>
+    <string name="email_main">baiyou1024@qq.com</string>
+    <string name="search">搜索</string>
+    <string name="add_email">添加账户</string>
+    <string name="edit">编辑</string>
+    <string name="username">百忧</string>
+    <string name="my_account">我的账户</string>
+    <string name="email_other">2889680858@qq.com</string>
+    <string name="function_setting">功能设置</string>
 </resources>
