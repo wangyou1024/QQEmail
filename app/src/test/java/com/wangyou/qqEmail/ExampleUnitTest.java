@@ -1,4 +1,4 @@
-package com.wangyou.qqemail;
+package com.wangyou.qqEmail;
 
 import org.junit.Test;
 

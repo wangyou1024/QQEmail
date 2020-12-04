@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">QQ邮箱</string>
+    <string name="receive_message">收件箱</string>
+    <string name="star_email">星标邮件</string>
+    <string name="write_email">写邮件</string>
+    <string name="note_thing">写记事</string>
+    <string name="scan_file">扫描文件</string>
+    <string name="setting">设置</string>
+    <string name="time_poster">时光信使</string>
+    <string name="my_receive_box">我的收件箱</string>
+    <string name="my_application">我的应用</string>
+    <string name="address_list">通讯录</string>
+    <string name="notebook">记事本</string>
+    <string name="calendar">日历</string>
+    <string name="grade_card">贺卡</string>
+    <string name="online_word">在线文档</string>
+    <string name="every_grade_read">每日悦读</string>
+    <string name="company_wechat">企业微信</string>
+    <string name="more_application">更多应用</string>
+    <string name="file_list">文件夹</string>
+    <string name="group_email">群邮件</string>
+    <string name="draft">草稿箱</string>
+    <string name="have_sent">已发送</string>
+    <string name="have_delete">已删除</string>
+    <string name="rubbish_box">垃圾箱</string>
 </resources>

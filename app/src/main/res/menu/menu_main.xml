@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_write_email"
+        android:icon="@mipmap/write_email"
+        android:title="@string/write_email" />
+    <item
+        android:id="@+id/menu_item_note"
+        android:icon="@mipmap/note_thing"
+        android:title="@string/note_thing" />
+    <item
+        android:id="@+id/menu_item_scan_file"
+        android:icon="@mipmap/scan_file"
+        android:title="@string/scan_file" />
+    <item
+        android:id="@+id/menu_item_setting"
+        android:icon="@mipmap/setting"
+        android:title="@string/setting" />
+    <item
+        android:id="@+id/menu_item_time_poster"
+        android:icon="@mipmap/time_poster"
+        android:title="@string/time_poster" />
+</menu>
