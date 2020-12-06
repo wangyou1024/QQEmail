@@ -12,7 +12,7 @@
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/line_vertical"
             android:orientation="horizontal"
             android:background="@color/white"
             >
@@ -25,7 +25,7 @@
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
                 android:layout_centerInParent="true"
                 android:textColor="@color/black"
-                android:text="@string/cancel"
+                android:text="@string/over"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 />
@@ -113,7 +113,7 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/line_vertical"
                 android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
                 android:gravity="center_vertical"
@@ -166,7 +166,7 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/line_vertical"
                 android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
                 android:gravity="center_vertical"
@@ -203,7 +203,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/line_vertical"
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:orientation="horizontal"

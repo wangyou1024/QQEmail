@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/line_vertical"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/margin_horizontal">
@@ -94,6 +94,7 @@
                 android:textColor="@color/primary_300" />
 
             <LinearLayout
+                android:id="@+id/ll_receive_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
@@ -126,6 +127,7 @@
                 android:background="@color/primary_50" />
 
             <LinearLayout
+                android:id="@+id/ll_star_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
@@ -411,6 +413,7 @@
                 android:textColor="@color/primary_300" />
 
             <LinearLayout
+                android:id="@+id/ll_group_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
@@ -441,6 +444,7 @@
                 android:background="@color/primary_50" />
 
             <LinearLayout
+                android:id="@+id/ll_draft_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
@@ -452,13 +456,13 @@
                     android:layout_width="@dimen/ic_size"
                     android:layout_height="@dimen/ic_size"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/draft" />
+                    android:src="@mipmap/draft_box" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_horizontal"
-                    android:text="@string/draft"
+                    android:text="@string/draft_box"
                     android:textColor="@color/primary_800"
                     android:textSize="@dimen/list_text_size" />
             </LinearLayout>
@@ -471,6 +475,7 @@
                 android:background="@color/primary_50" />
 
             <LinearLayout
+                android:id="@+id/ll_have_sent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
@@ -501,6 +506,7 @@
                 android:background="@color/primary_50" />
 
             <LinearLayout
+                android:id="@+id/ll_have_delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
@@ -531,6 +537,7 @@
                 android:background="@color/primary_50" />
 
             <LinearLayout
+                android:id="@+id/ll_rubbish_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"
