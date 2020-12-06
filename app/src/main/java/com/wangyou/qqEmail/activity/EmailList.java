@@ -126,7 +126,7 @@ public class EmailList extends BaseActivity {
         int type = intent.getIntExtra("type", RECEIVE_MESSAGE);
         setType(type);
         data = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 20; i++) {
             Email email = new Email();
             email.setSender("新华社" + i);
             email.setTheme("重庆煤矿事故致18人遇难");

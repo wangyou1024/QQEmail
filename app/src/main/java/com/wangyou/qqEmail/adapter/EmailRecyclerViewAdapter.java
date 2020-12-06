@@ -1,15 +1,9 @@
 package com.wangyou.qqEmail.adapter;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -26,12 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * 参考：https://www.material.io/的官方app
- */
-public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements onMoveAndSwipedListener {
 
-    private Context context;
+public class EmailRecyclerViewAdapter extends BaseRecyclerViewAdapter implements onMoveAndSwipedListener {
+
     private List<Email> mItems;
     private final int TYPE_NORMAL = 1;
 
@@ -42,7 +33,7 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     private OnItemClickListener onItemClickListener;
 
     public EmailRecyclerViewAdapter(Context context) {
-        this.context = context;
+        this.mContext = context;
         mItems = new ArrayList();
     }
 
@@ -70,7 +61,7 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-
+        methodStart("onBindViewHolder");
         if (holder instanceof RecyclerViewHolder) {
             final RecyclerViewHolder recyclerViewHolder = (RecyclerViewHolder) holder;
             Email email = mItems.get(position);
@@ -84,9 +75,10 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             recyclerViewHolder.tvTheme.setText(email.getTheme());
             recyclerViewHolder.tvContent.setText(email.getContent());
             // 新ViewHolder的显示动画
-            Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_recycler_item_show);
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_recycler_item_show);
             recyclerViewHolder.mView.startAnimation(animation);
         }
+        methodEnd("onBindViewHolder");
     }
 
 
@@ -156,5 +148,6 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public interface OnItemClickListener {
         void onItemClick(Serializable obj);
     }
+
 
 }

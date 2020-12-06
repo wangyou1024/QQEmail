@@ -165,6 +165,7 @@
                 android:textColor="@color/primary_300" />
 
             <LinearLayout
+                android:id="@+id/ll_address_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal"

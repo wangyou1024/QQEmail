@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QQ邮箱">
         <activity
+            android:name=".activity.AddressList"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
             android:name=".activity.EmailList"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity

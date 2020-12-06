@@ -20,6 +20,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private CardView cvHeader;
     private LinearLayout llReceiveMessage;
     private LinearLayout llStarEmail;
+    private LinearLayout llAddressList;
     private LinearLayout llGroupEmail;
     private LinearLayout llDraft;
     private LinearLayout llHaveSent;
@@ -55,6 +56,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         llReceiveMessage.setOnClickListener(this);
         llStarEmail = findViewById(R.id.ll_star_email);
         llStarEmail.setOnClickListener(this);
+        llAddressList = findViewById(R.id.ll_address_list);
+        llAddressList.setOnClickListener(v->{
+            Intent intent = new Intent(this, AddressList.class);
+            startActivity(intent);
+        });
         llGroupEmail = findViewById(R.id.ll_group_email);
         llGroupEmail.setOnClickListener(this);
         llDraft = findViewById(R.id.ll_draft_box);

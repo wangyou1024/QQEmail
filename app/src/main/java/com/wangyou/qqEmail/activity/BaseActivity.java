@@ -19,11 +19,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initData();
 
     protected void methodStart(String methodName){
-        Log.i(this.getLocalClassName(),methodName+" start");
+        Log.i(this.getClass().getSimpleName(),methodName+" start");
     }
 
     protected void methodEnd(String methodName){
-        Log.i(this.getLocalClassName(),methodName+" end");
+        Log.i(this.getClass().getSimpleName(),methodName+" end");
     }
 
     protected void toastShow(String msg){

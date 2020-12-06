@@ -65,8 +65,8 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onStart() {
-        Log.i(this.getClass().getSimpleName(), "onStart: start");
         super.onStart();
+        methodStart("onStart");
         //获取dialog对象
         BottomSheetDialog dialog = (BottomSheetDialog) getDialog();
         //把windowsd的默认背景颜色去掉，不然圆角显示不见
@@ -98,6 +98,7 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
                 behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             });
         }
+        methodEnd("onStart");
     }
 
     /**
@@ -123,7 +124,7 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
     }
 
     public void initView(View view) {
-        Log.i(this.getClass().getSimpleName(),"initView start");
+        methodStart("initView");
         etReceivePerson = view.findViewById(R.id.et_receive_person);
         // 监听变化
         etReceivePerson.addTextChangedListener(new MyTextWatcher(email,0));
@@ -154,16 +155,16 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
         etContent.addTextChangedListener(new MyTextWatcher(email,3));
         tvCancel = view.findViewById(R.id.tv_cancel);
         tvSend = view.findViewById(R.id.tv_send);
-        Log.i(this.getClass().getSimpleName(),"initView end");
+        methodEnd("initView");
     }
 
     public void initData() {
-        Log.i(this.getClass().getSimpleName(),"initData start");
+        methodStart("initData");
         etReceivePerson.setText(email.getReceivePerson());
         etSender.setText(email.getSender());
         etTheme.setText(email.getTheme());
         etContent.setText(email.getContent());
-        Log.i(this.getClass().getSimpleName(),"initData end");
+        methodEnd("initData");
     }
 
     private class MyTextWatcher implements TextWatcher{
@@ -197,4 +198,16 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
             }
         }
     }
+    protected void methodStart(String methodName){
+        Log.i(this.getClass().getSimpleName(),methodName+" start");
+    }
+
+    protected void methodEnd(String methodName){
+        Log.i(this.getClass().getSimpleName(),methodName+" end");
+    }
+
+    protected void toastShow(String msg){
+        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+    }
+
 }
