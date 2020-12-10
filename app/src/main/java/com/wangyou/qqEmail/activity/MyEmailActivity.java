@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.wangyou.qqEmail.R;
 
-public class MyEmail extends BaseActivity {
+public class MyEmailActivity extends BaseActivity {
 
     private TextView tvReturn;
 

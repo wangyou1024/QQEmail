@@ -2,6 +2,7 @@
 <resources>
     <dimen name="margin_horizontal">15dp</dimen>
     <dimen name="margin_horizontal_more">60dp</dimen>
+    <dimen name="margin_horizontal_most">120dp</dimen>
     <dimen name="margin_vertical">10dp</dimen>
     <dimen name="line_vertical">50dp</dimen>
     <dimen name="list_text_size">19sp</dimen>

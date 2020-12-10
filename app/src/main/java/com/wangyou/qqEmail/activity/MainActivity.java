@@ -11,6 +11,8 @@ import android.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 
 import com.wangyou.qqEmail.R;
+import com.wangyou.qqEmail.entity.Email;
+import com.wangyou.qqEmail.entity.Person;
 import com.wangyou.qqEmail.fragment.WriteEmailFragment;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
@@ -49,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         });
         cvHeader = findViewById(R.id.cv_header);
         cvHeader.setOnClickListener((view)->{
-            Intent intent = new Intent(MainActivity.this, MyEmail.class);
+            Intent intent = new Intent(MainActivity.this, MyEmailActivity.class);
             startActivity(intent);
         });
         llReceiveMessage = findViewById(R.id.ll_receive_message);
@@ -58,7 +60,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         llStarEmail.setOnClickListener(this);
         llAddressList = findViewById(R.id.ll_address_list);
         llAddressList.setOnClickListener(v->{
-            Intent intent = new Intent(this, AddressList.class);
+            Intent intent = new Intent(this, AddressListActivity.class);
             startActivity(intent);
         });
         llGroupEmail = findViewById(R.id.ll_group_email);
@@ -114,15 +116,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         methodStart("onClick");
-        Intent intent = new Intent(this, EmailList.class);
+        Intent intent = new Intent(this, EmailListActivity.class);
         switch (v.getId()){
-            case R.id.ll_receive_message:intent.putExtra("type", EmailList.RECEIVE_MESSAGE);break;
-            case R.id.ll_star_email:intent.putExtra("type", EmailList.STAR_EMAIL);break;
-            case R.id.ll_group_email:intent.putExtra("type", EmailList.GROUP_EMAIL);break;
-            case R.id.ll_draft_box:intent.putExtra("type", EmailList.DRAFT_BOX);break;
-            case R.id.ll_have_sent:intent.putExtra("type", EmailList.HAVE_SENT);break;
-            case R.id.ll_have_delete:intent.putExtra("type", EmailList.HAVE_DELETE);break;
-            case R.id.ll_rubbish_box:intent.putExtra("type", EmailList.RUBBISH);break;
+            case R.id.ll_receive_message:intent.putExtra("type", Email.RECEIVE_MESSAGE);break;
+            case R.id.ll_star_email:intent.putExtra("type", Email.STAR_EMAIL);break;
+            case R.id.ll_group_email:intent.putExtra("type", Email.GROUP_EMAIL);break;
+            case R.id.ll_draft_box:intent.putExtra("type", Email.DRAFT_BOX);break;
+            case R.id.ll_have_sent:intent.putExtra("type", Email.HAVE_SENT);break;
+            case R.id.ll_have_delete:intent.putExtra("type", Email.HAVE_DELETE);break;
+            case R.id.ll_rubbish_box:intent.putExtra("type", Email.RUBBISH);break;
         }
         startActivity(intent);
         methodEnd("onClick");

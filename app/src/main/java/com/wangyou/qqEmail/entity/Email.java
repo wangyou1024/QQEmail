@@ -14,6 +14,21 @@ public class Email implements Serializable {
     private boolean draft;
     private boolean star;
 
+    // 收件箱
+    public static final int RECEIVE_MESSAGE = 0;
+    // 星标邮件
+    public static final int STAR_EMAIL = 1;
+    // 群邮件
+    public static final int GROUP_EMAIL = 2;
+    // 草稿箱
+    public static final int DRAFT_BOX = 3;
+    // 已发送
+    public static final int HAVE_SENT = 4;
+    // 已删除
+    public static final int HAVE_DELETE = 5;
+    // 垃圾箱
+    public static final int RUBBISH = 6;
+
     public Email() {
         this.eid = "";
         this.receivePerson = "";

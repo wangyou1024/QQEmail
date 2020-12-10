@@ -4,12 +4,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wangyou.qqEmail.R;
 import com.wangyou.qqEmail.adapter.PersonRecyclerViewAdapter;
+import com.wangyou.qqEmail.data.DBOpenHelper;
 import com.wangyou.qqEmail.entity.Person;
 import com.wangyou.qqEmail.util.CharacterParser;
 import com.wangyou.qqEmail.util.PinyinComparator;
@@ -24,7 +27,7 @@ import java.util.List;
  * 主体参考：https://blog.csdn.net/xiaanming/article/details/12684155
  * RecyclerView改进：https://stackoverflow.com/questions/31235183/recyclerview-how-to-smooth-scroll-to-top-of-item-on-a-certain-position
  */
-public class AddressList extends BaseActivity {
+public class AddressListActivity extends BaseActivity {
 
     private ImageView ivReturnPage;
     private ImageView ivAddPerson;
@@ -95,15 +98,14 @@ public class AddressList extends BaseActivity {
     protected void initData() {
         methodStart("initData");
         CharacterParser characterParser = CharacterParser.getInstance();
-        String[] names = {"{}","艾克a","爸爸b","裁判c","电科d","环境h","就j","额e","i",
-                "款爷k","李明l","张三z","王五w","杏杏x","可可k","皮皮p","格格g","快快k",
-                "夫夫f","看k","老板l","妈妈m","奶奶n","欧布o","婆婆p","强强q","荣荣r",
-                "水水s","天天t","u","v","我w","喜喜x","幺幺y","智障z","哥g","阿布a"};
+        DBOpenHelper dbOpenHelper = new DBOpenHelper(this);
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from person", new String[]{});
         data = new ArrayList<>();
-        for (int i = 0; i < names.length; i++){
+        while (cursor.moveToNext()){
             Person person = new Person();
-            person.setName(names[i]);
-            person.setEmail("baiyou1024@qq.com");
+            person.setName(cursor.getString(cursor.getColumnIndex("name")));
+            person.setEmail(cursor.getString(cursor.getColumnIndex("email")));
             String pinyin = characterParser.getSelling(person.getName()).substring(0,1).toUpperCase();
             // 字母正常排序，其他标点统一为#
             if (pinyin.matches("[A-Z]")){
@@ -113,6 +115,8 @@ public class AddressList extends BaseActivity {
             }
             data.add(person);
         }
+        db.close();
+        cursor.close();
         Collections.sort(data, new PinyinComparator());
         methodEnd("initData");
     }

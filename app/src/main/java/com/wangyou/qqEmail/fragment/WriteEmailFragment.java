@@ -1,6 +1,8 @@
 package com.wangyou.qqEmail.fragment;
 
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,7 +26,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.wangyou.qqEmail.R;
+import com.wangyou.qqEmail.data.DBOpenHelper;
 import com.wangyou.qqEmail.entity.Email;
+import com.wangyou.qqEmail.util.CastContentValues;
 
 
 /**
@@ -42,6 +46,8 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
     private TextView tvCancel;
     private TextView tvSend;
 
+    private DataChange dataChange;
+
     static {
         email = new Email();
     }
@@ -55,6 +61,10 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSendEmail(DataChange dataChange) {
+        this.dataChange = dataChange;
     }
 
     @NonNull
@@ -87,13 +97,26 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //设置监听
             tvCancel.setOnClickListener(view -> {
-                Log.i("tvCancel","onClick");
+                Log.i("tvCancel", "onClick");
                 //关闭弹窗
                 behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             });
-            tvSend.setOnClickListener((view)->{
-                Log.i("tvSend","onClick");
-                Toast.makeText(getContext(),"你发送了一封邮件给"+email.getReceivePerson(),Toast.LENGTH_SHORT).show();
+            tvSend.setOnClickListener((view) -> {
+                Log.i("tvSend", "onClick");
+                Toast.makeText(getContext(), "你发送了一封邮件给" + email.getReceivePerson(), Toast.LENGTH_SHORT).show();
+                DBOpenHelper dbOpenHelper = new DBOpenHelper(getContext());
+                SQLiteDatabase writableDatabase = dbOpenHelper.getWritableDatabase();
+                email.setEid(System.currentTimeMillis() + "");
+                email.setRead(true);
+                email.setType(Email.HAVE_SENT);
+                email.setDraft(false);
+                email.setStar(false);
+                ContentValues contentValues = CastContentValues.getContentValues(email);
+                writableDatabase.insert("email", null, contentValues);
+                writableDatabase.close();
+                if (this.dataChange != null) {
+                    this.dataChange.sendEmail(email);
+                }
                 email = new Email();
                 behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             });
@@ -127,32 +150,32 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
         methodStart("initView");
         etReceivePerson = view.findViewById(R.id.et_receive_person);
         // 监听变化
-        etReceivePerson.addTextChangedListener(new MyTextWatcher(email,0));
+        etReceivePerson.addTextChangedListener(new MyTextWatcher(email, 0));
         // 切换焦点
         etReceivePerson.setOnEditorActionListener(((v, actionId, event) -> {
-            Log.i("etReceivePerson","onEditorAction");
+            Log.i("etReceivePerson", "onEditorAction");
             etReceivePerson.clearFocus();
             etSender.requestFocus();
             return true;
         }));
         etSender = view.findViewById(R.id.et_sender);
-        etSender.addTextChangedListener(new MyTextWatcher(email,1));
+        etSender.addTextChangedListener(new MyTextWatcher(email, 1));
         etSender.setOnEditorActionListener(((v, actionId, event) -> {
-            Log.i("etSender","onEditorAction");
+            Log.i("etSender", "onEditorAction");
             etSender.clearFocus();
             etTheme.requestFocus();
             return true;
         }));
         etTheme = view.findViewById(R.id.et_theme);
-        etTheme.addTextChangedListener(new MyTextWatcher(email,2));
+        etTheme.addTextChangedListener(new MyTextWatcher(email, 2));
         etTheme.setOnEditorActionListener(((v, actionId, event) -> {
-            Log.i("etTheme","onEditorAction");
+            Log.i("etTheme", "onEditorAction");
             etTheme.clearFocus();
             etContent.requestFocus();
             return true;
         }));
         etContent = view.findViewById(R.id.et_content);
-        etContent.addTextChangedListener(new MyTextWatcher(email,3));
+        etContent.addTextChangedListener(new MyTextWatcher(email, 3));
         tvCancel = view.findViewById(R.id.tv_cancel);
         tvSend = view.findViewById(R.id.tv_send);
         methodEnd("initView");
@@ -167,7 +190,7 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
         methodEnd("initData");
     }
 
-    private class MyTextWatcher implements TextWatcher{
+    private class MyTextWatcher implements TextWatcher {
 
         private Email email;
         private Integer type;
@@ -189,25 +212,39 @@ public class WriteEmailFragment extends BottomSheetDialogFragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            switch (type){
-                case 0: email.setReceivePerson(s.toString());break;
-                case 1: email.setSender(s.toString());break;
-                case 2: email.setTheme(s.toString());break;
-                case 3: email.setContent(s.toString());break;
-                default:break;
+            switch (type) {
+                case 0:
+                    email.setReceivePerson(s.toString());
+                    break;
+                case 1:
+                    email.setSender(s.toString());
+                    break;
+                case 2:
+                    email.setTheme(s.toString());
+                    break;
+                case 3:
+                    email.setContent(s.toString());
+                    break;
+                default:
+                    break;
             }
         }
     }
-    protected void methodStart(String methodName){
-        Log.i(this.getClass().getSimpleName(),methodName+" start");
+
+    public interface DataChange {
+        public void sendEmail(Email email);
     }
 
-    protected void methodEnd(String methodName){
-        Log.i(this.getClass().getSimpleName(),methodName+" end");
+    protected void methodStart(String methodName) {
+        Log.i(this.getClass().getSimpleName(), methodName + " start");
     }
 
-    protected void toastShow(String msg){
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+    protected void methodEnd(String methodName) {
+        Log.i(this.getClass().getSimpleName(), methodName + " end");
+    }
+
+    protected void toastShow(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -45,4 +45,11 @@
     <string name="email_theme">The New York Times shared \'Amid Sexual Harassm Scandal,Elite Win\'</string>
     <string name="email_content">What\'s happening The New York Times shared The New York Amid Sexual Harassment Scandal,What\'s happening The New York Times shared The New York Amid Sexual Harassment Scandal.</string>
     <string name="space_box">没有邮件</string>
+    <string name="email_tencent_company">腾讯企业邮</string>
+    <string name="email_163">163邮箱</string>
+    <string name="eamil_126">126邮箱</string>
+    <string name="email_gmail">Gmail</string>
+    <string name="email_outlook">Outlook</string>
+    <string name="email_exchange">Exchange</string>
+    <string name="other_email">其他邮箱</string>
 </resources>

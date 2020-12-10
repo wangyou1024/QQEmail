@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.wangyou.qqEmail.R;
 import com.wangyou.qqEmail.adapter.EmailRecyclerViewAdapter;
+import com.wangyou.qqEmail.data.DBOpenHelper;
 import com.wangyou.qqEmail.entity.Email;
 import com.wangyou.qqEmail.fragment.WriteEmailFragment;
 import com.wangyou.qqEmail.view.ItemTouchHelperCallback;
@@ -25,7 +28,7 @@ import java.util.Random;
 /**
  * 参考：https://www.material.io/的官方app
  */
-public class EmailList extends BaseActivity {
+public class EmailListActivity extends BaseActivity {
 
     private ImageView ivReturnPage;
     private ImageView ivWriteEmail;
@@ -36,21 +39,6 @@ public class EmailList extends BaseActivity {
     private EmailRecyclerViewAdapter adapter;
     private List<Email> data = new ArrayList<>();
     private int type;
-
-    // 收件箱
-    public static final int RECEIVE_MESSAGE = 0;
-    // 星标邮件
-    public static final int STAR_EMAIL = 1;
-    // 群邮件
-    public static final int GROUP_EMAIL = 2;
-    // 草稿箱
-    public static final int DRAFT_BOX = 3;
-    // 已发送
-    public static final int HAVE_SENT = 4;
-    // 已删除
-    public static final int HAVE_DELETE = 5;
-    // 垃圾箱
-    public static final int RUBBISH = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,18 +60,25 @@ public class EmailList extends BaseActivity {
 
         ivWriteEmail = findViewById(R.id.iv_write_email);
         ivWriteEmail.setOnClickListener((view) -> {
-            WriteEmailFragment.newInstance().show(getSupportFragmentManager(), "Email List");
+            WriteEmailFragment writeEmailFragment = WriteEmailFragment.newInstance();
+            writeEmailFragment.setSendEmail(email->{
+                // 如果当前处在已发送的列表时，更新数据
+                if (this.type == Email.HAVE_SENT){
+                    adapter.addItem(0, email);
+                }
+            });
+            writeEmailFragment.show(getSupportFragmentManager(), "Email List");
         });
 
         tvListTitle = findViewById(R.id.tv_list_title);
         switch (type){
-            case RECEIVE_MESSAGE:tvListTitle.setText("收件箱");break;
-            case STAR_EMAIL: tvListTitle.setText("星标邮件");break;
-            case GROUP_EMAIL:tvListTitle.setText("群邮件");break;
-            case DRAFT_BOX: tvListTitle.setText("草稿箱");break;
-            case HAVE_SENT: tvListTitle.setText("已发送");break;
-            case HAVE_DELETE:tvListTitle.setText("已删除");break;
-            case RUBBISH:tvListTitle.setText("垃圾箱");break;
+            case Email.RECEIVE_MESSAGE:tvListTitle.setText("收件箱");break;
+            case Email.STAR_EMAIL: tvListTitle.setText("星标邮件");break;
+            case Email.GROUP_EMAIL:tvListTitle.setText("群邮件");break;
+            case Email.DRAFT_BOX: tvListTitle.setText("草稿箱");break;
+            case Email.HAVE_SENT: tvListTitle.setText("已发送");break;
+            case Email.HAVE_DELETE:tvListTitle.setText("已删除");break;
+            case Email.RUBBISH:tvListTitle.setText("垃圾箱");break;
             default:break;
         }
 
@@ -123,34 +118,23 @@ public class EmailList extends BaseActivity {
     protected void initData() {
         methodStart("initData");
         Intent intent = getIntent();
-        int type = intent.getIntExtra("type", RECEIVE_MESSAGE);
+        int type = intent.getIntExtra("type", Email.RECEIVE_MESSAGE);
         setType(type);
         data = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
+        DBOpenHelper dbOpenHelper = new DBOpenHelper(this);
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from email where type=?", new String[]{this.type + ""});
+        while (cursor.moveToNext()){
             Email email = new Email();
-            email.setSender("新华社" + i);
-            email.setTheme("重庆煤矿事故致18人遇难");
-            email.setContent("新华社重庆12月5日电（记者周闻韬、周凯）记者从重庆市永川区吊水洞煤矿安全事故应急救援指挥部获悉，截至5日7时，救援人员已成功救出幸存者1名、发现遇难者18名，搜救工作仍在紧张进行中。");
-            email.setDate("2020/12/5");
-            Random random = new Random(System.currentTimeMillis());
-            boolean isRead = random.nextBoolean();
-            email.setRead(isRead);
-            // 已读的邮件才能star
-            if (isRead){
-                email.setDraft(random.nextBoolean());
-                email.setStar(random.nextBoolean());
-            }
+            email.setEid(cursor.getString(cursor.getColumnIndex("eid")));
+            email.setSender(cursor.getString(cursor.getColumnIndex("sender")));
+            email.setTheme(cursor.getString(cursor.getColumnIndex("theme")));
+            email.setContent(cursor.getString(cursor.getColumnIndex("content")));
+            email.setDate(cursor.getString(cursor.getColumnIndex("date")));
+            email.setRead(cursor.getInt(cursor.getColumnIndex("read")) != 0);
+            email.setDraft(cursor.getInt(cursor.getColumnIndex("draft")) != 0);
+            email.setStar(cursor.getInt(cursor.getColumnIndex("star")) != 0);
             email.setType(this.type);
-            switch (email.getType()){
-                case RECEIVE_MESSAGE:email.setDraft(false);break;
-                case STAR_EMAIL: email.setRead(true);email.setStar(true);break;
-                case GROUP_EMAIL:break;
-                case DRAFT_BOX: email.setRead(true);email.setDraft(true);break;
-                case HAVE_SENT: email.setRead(true);email.setDraft(false);break;
-                case HAVE_DELETE:
-                case RUBBISH:email.setRead(true);break;
-                default:email.setRead(false);break;
-            }
             data.add(email);
         }
         methodEnd("initData");
