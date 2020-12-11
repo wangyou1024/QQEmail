@@ -23,6 +23,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private LinearLayout llReceiveMessage;
     private LinearLayout llStarEmail;
     private LinearLayout llAddressList;
+    private LinearLayout llCalender;
     private LinearLayout llGroupEmail;
     private LinearLayout llDraft;
     private LinearLayout llHaveSent;
@@ -46,9 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void initView() {
         methodStart("initView");
         ivMore = findViewById(R.id.iv_more);
-        ivMore.setOnClickListener(view-> {
-            showPopupMenu(view);
-        });
+        ivMore.setOnClickListener(this::showPopupMenu);
         cvHeader = findViewById(R.id.cv_header);
         cvHeader.setOnClickListener((view)->{
             Intent intent = new Intent(MainActivity.this, MyEmailActivity.class);
@@ -61,6 +60,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         llAddressList = findViewById(R.id.ll_address_list);
         llAddressList.setOnClickListener(v->{
             Intent intent = new Intent(this, AddressListActivity.class);
+            startActivity(intent);
+        });
+        llCalender = findViewById(R.id.ll_calender);
+        llCalender.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CalenderActivity.class);
             startActivity(intent);
         });
         llGroupEmail = findViewById(R.id.ll_group_email);
