@@ -52,4 +52,8 @@
     <string name="email_outlook">Outlook</string>
     <string name="email_exchange">Exchange</string>
     <string name="other_email">其他邮箱</string>
+    <string name="detail">详情</string>
+    <string name="hidden">隐藏</string>
+    <string name="time">时间：</string>
+    <string name="date">2020/2/1</string>
 </resources>

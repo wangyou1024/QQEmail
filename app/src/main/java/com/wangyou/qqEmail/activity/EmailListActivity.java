@@ -89,6 +89,9 @@ public class EmailListActivity extends BaseActivity {
         adapter = new EmailRecyclerViewAdapter(this);
         adapter.setOnItemClickListener(obj -> {
             Email email = (Email) obj;
+            Intent intent = new Intent(this, EmailDetailActivity.class);
+            intent.putExtra("email", email);
+            startActivity(intent);
             toastShow(email.getSender());
         });
         mRecyclerView.setAdapter(adapter);

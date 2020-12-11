@@ -67,6 +67,7 @@ public class AddressListActivity extends BaseActivity {
         personRecyclerViewAdapter.setOnItemClickListener(obj -> {
             methodStart("PersonRecyclerView onClick");
             Person person = (Person) obj;
+
             toastShow(person.getName());
             methodEnd("PersonRecyclerView onClick");
         });
